@@ -5,14 +5,49 @@ import CardPanorama from '../components/CardPanorama';
 import { StyleSheet, Text, View, FlatList, TextInput, Platform, TouchableOpacity } from 'react-native';
 
 const MIS_PANORAMAS = [
-  { id: '1', titulo: "Plaza de Armas", ubicacion: "Centro de Talagante", imagenUrl: "https://picsum.photos/id/10/800/600" },
-  { id: '2', titulo: "Río Mapocho (Zona Picnic)", ubicacion: "Sector El Monte / Talagante", imagenUrl: "https://picsum.photos/id/15/800/600" },
-  { id: '3', titulo: "Viña Undurraga", ubicacion: "Camino a Melipilla", imagenUrl: "https://picsum.photos/id/28/800/600" },
-  { id: '4', titulo: "Parque Octavio Leiva", ubicacion: "Av. Bernardo O'Higgins", imagenUrl: "https://picsum.photos/id/11/800/600" },
-  { id: '5', titulo: "Santuario de la Naturaleza", ubicacion: "Sector Lonquén", imagenUrl: "https://picsum.photos/id/16/800/600" }
+  { 
+    id: '1', 
+    titulo: "Plaza de Armas", 
+    ubicacion: "Centro de Talagante", 
+    imagenUrl: "https://picsum.photos/id/10/800/600",
+    latitude: -33.6644, 
+    longitude: -70.9283 
+  },
+  { 
+    id: '2', 
+    titulo: "Río Mapocho (Zona Picnic)", 
+    ubicacion: "Sector El Monte / Talagante", 
+    imagenUrl: "https://picsum.photos/id/15/800/600",
+    latitude: -33.6500, 
+    longitude: -70.9500 
+  },
+  { 
+    id: '3', 
+    titulo: "Viña Undurraga", 
+    ubicacion: "Camino a Melipilla", 
+    imagenUrl: "https://picsum.photos/id/28/800/600",
+    latitude: -33.6828, 
+    longitude: -70.9083 
+  },
+  { 
+    id: '4', 
+    titulo: "Parque Octavio Leiva", 
+    ubicacion: "Av. Bernardo O'Higgins", 
+    imagenUrl: "https://picsum.photos/id/11/800/600",
+    latitude: -33.6595, 
+    longitude: -70.9298 
+  },
+  { 
+    id: '5', 
+    titulo: "Santuario de la Naturaleza", 
+    ubicacion: "Sector Lonquén", 
+    imagenUrl: "https://picsum.photos/id/16/800/600",
+    latitude: -33.7000, 
+    longitude: -70.8500 
+  }
 ];
 
-export default function HomeScreen({ navigation }) { // Recibimos "navigation" para usarlo después
+export default function HomeScreen({ navigation }) { 
   const [textoBusqueda, setTextoBusqueda] = useState('');
 
   const panoramasFiltrados = MIS_PANORAMAS.filter((item) => {

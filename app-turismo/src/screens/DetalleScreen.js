@@ -1,25 +1,37 @@
-// src/screens/DetalleScreen.js
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
+// PASO A: Importamos Linking y Platform
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Linking, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function DetalleScreen({ route, navigation }) {
-  // 1. RECIBIR LOS DATOS (EL PAQUETE)
-  // "route.params" contiene lo que enviamos desde la Home
   const { item } = route.params; 
+
+  // PASO B: La función lógica (va antes del return)
+  const abrirMapa = () => {
+    const lat = item.latitude;
+    const lng = item.longitude;
+    const label = item.titulo;
+
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+    const latLng = `${lat},${lng}`;
+    
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`
+    });
+
+    Linking.openURL(url);
+  };
 
   return (
     <View style={styles.container}>
-      {/* IMAGEN DE FONDO (Ocupa la mitad de arriba) */}
       <Image source={{ uri: item.imagenUrl }} style={styles.imagenGigante} resizeMode="cover" />
 
-      {/* BOTÓN ATRÁS FLOTANTE */}
       <TouchableOpacity style={styles.botonAtras} onPress={() => navigation.goBack()}>
         <Ionicons name="arrow-back" size={24} color="#333" />
       </TouchableOpacity>
 
-      {/* CONTENEDOR DE INFO (Blanco, esquinas redondeadas) */}
       <View style={styles.infoContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
           
@@ -30,17 +42,12 @@ export default function DetalleScreen({ route, navigation }) {
             <Text style={styles.ubicacion}>{item.ubicacion}</Text>
           </View>
 
-          {/* Descripción de relleno (Lorem Ipsum) */}
           <Text style={styles.descripcion}>
-            Aquí iría la descripción detallada de este panorama. 
-            Imagina un texto que cuenta la historia del lugar, los horarios de atención 
-            y por qué es un imperdible de Talagante.
-            {'\n'}{'\n'}
-            Es un lugar perfecto para visitar en familia o con amigos y disfrutar de la naturaleza.
+            Aquí iría la descripción detallada de este panorama...
           </Text>
 
-          {/* Botón de Acción */}
-          <TouchableOpacity style={styles.botonIr}>
+          {/* PASO C: Conectamos el botón aquí */}
+          <TouchableOpacity style={styles.botonIr} onPress={abrirMapa}>
             <Text style={styles.textoBoton}>Cómo llegar</Text>
             <Ionicons name="map-outline" size={20} color="#fff" style={{ marginLeft: 8 }} />
           </TouchableOpacity>
@@ -51,27 +58,29 @@ export default function DetalleScreen({ route, navigation }) {
   );
 }
 
+// ... (Los estilos styles = ... siguen igual abajo)
 const styles = StyleSheet.create({
+  // ... tus estilos existentes ...
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
   imagenGigante: {
     width: '100%',
-    height: 350, // Altura de la imagen principal
+    height: 350, 
   },
   botonAtras: {
-    position: 'absolute', // Flota encima de la imagen
+    position: 'absolute',
     top: 50,
     left: 20,
-    backgroundColor: 'rgba(255,255,255,0.8)', // Blanco semitransparente
+    backgroundColor: 'rgba(255,255,255,0.8)',
     padding: 10,
     borderRadius: 50,
   },
   infoContainer: {
     flex: 1,
     backgroundColor: '#fff',
-    marginTop: -40, // TRUCO: Sube el blanco para tapar un poco la foto
+    marginTop: -40,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingHorizontal: 30,
@@ -96,7 +105,7 @@ const styles = StyleSheet.create({
   descripcion: {
     fontSize: 16,
     color: '#555',
-    lineHeight: 24, // Espacio entre líneas para leer mejor
+    lineHeight: 24,
     marginBottom: 30,
   },
   botonIr: {
