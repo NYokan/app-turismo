@@ -43,12 +43,17 @@ export default function HomeScreen({ navigation }) { // Recibimos "navigation" p
         data={panoramasFiltrados}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <CardPanorama 
-            titulo={item.titulo}
-            ubicacion={item.ubicacion}
-            imagenUrl={item.imagenUrl}
-          />
-        )}
+        <TouchableOpacity 
+         activeOpacity={0.8}
+         onPress={() => navigation.navigate('Detalle', { item: item })}
+        >
+        <CardPanorama 
+         titulo={item.titulo}
+         ubicacion={item.ubicacion}
+         imagenUrl={item.imagenUrl}
+        />
+        </TouchableOpacity>
+)}
         contentContainerStyle={styles.listaContent}
         showsVerticalScrollIndicator={false}
       />
